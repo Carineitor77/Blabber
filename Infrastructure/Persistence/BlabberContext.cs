@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence;
 
-public class TelegramContext : IdentityDbContext<User>
+public class BlabberContext : IdentityDbContext<User>
 {
-    public TelegramContext(DbContextOptions<TelegramContext> options) : base(options) {}
+    public BlabberContext(DbContextOptions<BlabberContext> options) : base(options) {}
 }

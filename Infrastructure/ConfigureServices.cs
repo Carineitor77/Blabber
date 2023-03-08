@@ -29,7 +29,7 @@ public static class ConfigureServices
             {
                 options.Password.RequireNonAlphanumeric = false;
             })
-            .AddEntityFrameworkStores<TelegramContext>()
+            .AddEntityFrameworkStores<BlabberContext>()
             .AddSignInManager<SignInManager<User>>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -45,7 +45,7 @@ public static class ConfigureServices
                 };
             });
 
-        services.AddDbContext<TelegramContext>(options =>
+        services.AddDbContext<BlabberContext>(options =>
         {
             options.UseSqlServer(config.GetConnectionString("DefaultConnection"), 
                 b => b.MigrationsAssembly("API"));
