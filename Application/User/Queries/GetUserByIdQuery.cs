@@ -27,7 +27,7 @@ public class GetUserByIdQueryHandler : IRequestHandler<GetUserByIdQuery, Result<
 
         if (user is null)
         {
-            return Result<UserDto>.Return(ReturnTypes.NotFound, message: "User with this id not found");
+            return Result<UserDto>.Return(ReturnTypes.NotFound, message: "User not found");
         }
 
         var userDto = _mapper.Map<UserDto>(user);

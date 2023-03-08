@@ -54,6 +54,7 @@ public static class ConfigureServices
         });
         
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IUserService, UserService>();
         
         return services;
     }
