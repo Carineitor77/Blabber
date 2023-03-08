@@ -2,14 +2,14 @@ using Application.Common.Core;
 using Application.Common.DTO.User;
 using Application.Common.Enums;
 using AutoMapper;
-using Domain;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.User.Queries;
 
-public record GetAllUsersQuery : IRequest<Result<List<UserDto>>>;
+public record GetAllUsersQuery(Guid Id) : IRequest<Result<List<UserDto>>>;
 
 public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, Result<List<UserDto>>>
 {
@@ -24,9 +24,12 @@ public class GetAllUsersQueryHandler : IRequestHandler<GetAllUsersQuery, Result<
     
     public async Task<Result<List<UserDto>>> Handle(GetAllUsersQuery request, CancellationToken cancellationToken)
     {
-        var users = await _context.Users.ToListAsync(cancellationToken);
+        var query = _context.Users.AsQueryable();
 
-        var usersDto = _mapper.Map<List<AuthUser>, List<UserDto>>(users);
+        query = query.Where(u => u.Id != request.Id.ToString());
+
+        var usersDto = await query.ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+            .ToListAsync(cancellationToken);
 
         return Result<List<UserDto>>.Return(ReturnTypes.Ok, usersDto);
     }
