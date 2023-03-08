@@ -1,3 +1,4 @@
+using API.Extensions;
 using Application;
 using Infrastructure;
 
@@ -8,9 +9,10 @@ builder.Services.AddApplicationServices(builder.Configuration);
 
 var app = builder.Build();
 
+app.UseException();
+
 if (app.Environment.IsDevelopment())
 {
-    app.UseDeveloperExceptionPage();
     app.UseSwagger();
     app.UseSwaggerUI();
 }
