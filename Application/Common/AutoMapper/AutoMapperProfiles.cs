@@ -1,4 +1,5 @@
-using Application.Common.DTO;
+using Application.Common.DTO.Auth;
+using Application.Common.DTO.User;
 using AutoMapper;
 using Domain;
 
@@ -8,6 +9,7 @@ public class AutoMapperProfiles : Profile
 {
     public AutoMapperProfiles()
     {
-        CreateMap<RegisterDto, User>();
+        CreateMap<RegisterDto, AuthUser>();
+        CreateMap<AuthUser, UserDto>();
     }
 }

@@ -1,7 +1,6 @@
 using System.Text;
 using Application.Common.Interfaces;
 using Domain;
-using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -11,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Persistence;
 
 namespace Infrastructure;
 
@@ -25,12 +25,12 @@ public static class ConfigureServices
             options.Filters.Add(new AuthorizeFilter(policy));
         });
         
-        services.AddIdentityCore<User>(options =>
+        services.AddIdentityCore<AuthUser>(options =>
             {
                 options.Password.RequireNonAlphanumeric = false;
             })
             .AddEntityFrameworkStores<BlabberContext>()
-            .AddSignInManager<SignInManager<User>>();
+            .AddSignInManager<SignInManager<AuthUser>>();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(options =>

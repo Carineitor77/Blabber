@@ -17,13 +17,13 @@ public class TokenService : ITokenService
         _config = config;
     }
 
-    public string CreateToken(User user)
+    public string CreateToken(AuthUser authUser)
     {
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.Name, user.UserName),
-            new Claim(ClaimTypes.NameIdentifier, user.Id),
-            new Claim(ClaimTypes.Email, user.Email)
+            new Claim(ClaimTypes.Name, authUser.UserName),
+            new Claim(ClaimTypes.NameIdentifier, authUser.Id),
+            new Claim(ClaimTypes.Email, authUser.Email)
         };
 
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["TokenKey"]!));

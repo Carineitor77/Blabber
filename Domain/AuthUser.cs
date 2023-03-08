@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Domain;
 
-public class User : IdentityUser
+public class AuthUser : IdentityUser
 {
     public string? Bio { get; set; }
     public string FirstName { get; set; }
