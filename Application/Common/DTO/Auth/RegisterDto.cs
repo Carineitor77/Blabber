@@ -1,4 +1,4 @@
-namespace Application.Common.DTO;
+namespace Application.Common.DTO.Auth;
 
 public record RegisterDto(
     string UserName, 
