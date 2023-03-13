@@ -14,5 +14,6 @@ public class AutoMapperProfiles : AutoMapperProfile
         CreateMap<RegisterDto, AuthUser>();
         CreateMap<AuthUser, UserDto>();
         CreateMap<AuthUser, ProfileDto>();
+        CreateMap<EditProfileDto, AuthUser>();
     }
 }

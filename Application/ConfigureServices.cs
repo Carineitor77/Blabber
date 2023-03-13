@@ -1,10 +1,14 @@
+using System.Reflection;
 using Application.Auth.Commands;
 using Application.Common.AutoMapper;
+using AutoMapper;
+using AutoMapper.EquivalencyExpression;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Persistence;
 
 namespace Application;
 
@@ -50,9 +54,14 @@ public static class ConfigureServices
             });
         });
 
-        services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
+        services.AddAutoMapper((serviceProvider, automapper) =>
+        {
+            automapper.AddCollectionMappers();
+            automapper.UseEntityFrameworkCoreModel<BlabberContext>(serviceProvider);
+        }, typeof(AutoMapperProfiles).Assembly);
         
-        services.AddMediatR(typeof(LoginCommand).Assembly);
+        services.AddMediatR(Assembly.GetExecutingAssembly());
+        
         services.AddFluentValidation(config =>
         {
             config.ImplicitlyValidateChildProperties = true;
